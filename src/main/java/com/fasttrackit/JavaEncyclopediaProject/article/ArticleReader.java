@@ -33,7 +33,7 @@ public class ArticleReader {
         bufferedWriter.close();
     }
 
-   // @Bean
+    @Bean
     @SneakyThrows
     List<Article> readFile(ArticleRepository articleRepository) {
         wikipediaReferenceBracketsRemover();
@@ -41,11 +41,6 @@ public class ArticleReader {
         String line;
         while ((line = bufferedReader.readLine()) != null) {
             String[] tokens = line.split(" \\| ");
-            if (tokens[0].equals("") || tokens[0].equals("null")) tokens[0] = null;
-            if (tokens[1].equals("") || tokens[1].equals("null")) tokens[1] = null;
-            if (tokens[2].equals("") || tokens[2].equals("null")) tokens[2] = null;
-            if (tokens[3].equals("") || tokens[3].equals("null")) tokens[3] = null;
-            // for some reason this doesn't work with for ^
             articleRepository.save(new Article(tokens[0], tokens[1], tokens[2], tokens[3]));
         }
         bufferedReader.close();

@@ -12,6 +12,12 @@ public class RestExceptionHandler {
     public ErrorResponse handleResourceNotFoundException(ResourceNotFoundException exception) {
         return new ErrorResponse(exception.getMessage());
     }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = NullFieldException.class)
+    public ErrorResponse handleNullFieldException(NullFieldException exception) {
+        return new ErrorResponse(exception.getMessage());
+    }
 }
 
 record ErrorResponse(String message) {

@@ -1,7 +1,8 @@
 package com.fasttrackit.JavaEncyclopediaProject.article;
 
+import com.fasttrackit.JavaEncyclopediaProject.exceptions.NullFieldException;
 import com.fasttrackit.JavaEncyclopediaProject.exceptions.ResourceNotFoundException;
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,19 +18,22 @@ public class ArticleService {
     }
 
     public Article postArticle(Article article) {
+        if (article.getName() == null || article.getCategory() == null || article.getPicture() == null || article.getText() == null) {
+            throw new NullFieldException("Field cannot be null");
+        }
         return articleRepository.save(article);
     }
 
-   /* public List<Article> getArticles(String searchText) {
-        return articleRepository.getAllFiltered(searchText);
-    }*/
+    public List<Article> getArticles(String searchText, String selectCategory) {
+        return articleRepository.getAllFiltered(searchText, selectCategory);
+    }
 
-    public List<Article> getArticles(String searchText) {
+   /* public List<Article> getArticles(String searchText) {
         if (searchText != null) {
             return articleRepository.findByName(searchText);
         }
         return articleRepository.findAll();
-    }
+    }*/
 
     public Article getArticle(Integer id) {
         return articleRepository.findById(id)
@@ -37,6 +41,9 @@ public class ArticleService {
     }
 
     public Article editArticle(Integer id, Article article) {
+        if (article.getName() == null || article.getCategory() == null || article.getPicture() == null || article.getText() == null) {
+            throw new NullFieldException("Field cannot be null");
+        }
         Article existingArticle = articleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Article not found!"));
         existingArticle.setName(article.getName());
