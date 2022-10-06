@@ -1,4 +1,4 @@
-package com.fasttrackit.JavaEncyclopediaProject.userdata;
+package com.fasttrackit.JavaEncyclopediaProject.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

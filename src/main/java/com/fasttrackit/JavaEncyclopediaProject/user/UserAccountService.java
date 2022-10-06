@@ -1,4 +1,4 @@
-package com.fasttrackit.JavaEncyclopediaProject.userdata;
+package com.fasttrackit.JavaEncyclopediaProject.user;
 
 import com.fasttrackit.JavaEncyclopediaProject.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;

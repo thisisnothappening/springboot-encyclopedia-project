@@ -1,4 +1,4 @@
-package com.fasttrackit.JavaEncyclopediaProject.userdata;
+package com.fasttrackit.JavaEncyclopediaProject.user;
 
 import org.springframework.web.bind.annotation.*;
 
