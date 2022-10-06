@@ -1,5 +1,6 @@
 package com.fasttrackit.JavaEncyclopediaProject.user;
 
+import com.fasttrackit.JavaEncyclopediaProject.exceptions.NullFieldException;
 import com.fasttrackit.JavaEncyclopediaProject.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,9 @@ public class UserAccountService {
     }
 
     public UserAccount createAccount(UserAccount userAccount) {
+        if (userAccount.getUsername() == null || userAccount.getPassword() == null) {
+            throw new NullFieldException("Field cannot be null");
+        }
         return userAccountRepository.save(userAccount);
     }
 
@@ -32,6 +36,9 @@ public class UserAccountService {
     }
 
     public UserAccount editUser(Integer id, UserAccount userAccount) {
+        if (userAccount.getUsername() == null || userAccount.getPassword() == null) {
+            throw new NullFieldException("Field cannot be null");
+        }
         UserAccount existingUser = userAccountRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found!"));
         existingUser.setUsername(userAccount.getUsername());
