@@ -25,7 +25,7 @@ public class ArticleReader {
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileArticlesPathImproved));
         String line;
         while ((line = bufferedReader.readLine()) != null) {
-            bufferedWriter.write(line.replaceAll("\\[\\d+]", ""));
+            bufferedWriter.write(line.replaceAll("\\[(.*?)]", ""));
             bufferedWriter.newLine();
         }
         bufferedWriter.flush();
