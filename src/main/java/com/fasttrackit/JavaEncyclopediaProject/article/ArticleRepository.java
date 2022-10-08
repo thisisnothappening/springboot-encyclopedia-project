@@ -10,9 +10,7 @@ import java.util.List;
 public interface ArticleRepository extends JpaRepository<Article, Integer> {
 
     @Query("""
-    SELECT a FROM Article a WHERE (?1 IS NULL OR a.name LIKE ?1)
-    AND (?2 IS NULL OR a.category LIKE ?2)""")
-    List<Article> getAllFiltered(String searchText, String selectCategory);
-
-    // List<Article> findByName(String searchText);
+    SELECT a FROM Article a WHERE (?1 IS NULL OR lower(a.name) LIKE lower(?1))
+    AND (?2 IS NULL OR lower(a.category) LIKE lower(?2))""")
+    List<Article> getAllFiltered(String name, String category);
 }

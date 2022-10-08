@@ -21,9 +21,9 @@ public class ArticleController {
     }
 
     @GetMapping
-    List<Article> getArticles(@RequestParam(required = false) String searchText,
-                              @RequestParam(required = false) String selectCategory) {
-        return articleService.getArticles(searchText, selectCategory);
+    List<Article> getArticles(@RequestParam(required = false) String name,
+                              @RequestParam(required = false) String category) {
+        return articleService.getArticles(name, category);
     }
 
     @GetMapping("{id}")

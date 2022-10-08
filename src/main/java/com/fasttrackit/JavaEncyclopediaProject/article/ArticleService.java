@@ -23,16 +23,9 @@ public class ArticleService {
         return articleRepository.save(article);
     }
 
-    public List<Article> getArticles(String searchText, String selectCategory) {
-        return articleRepository.getAllFiltered(searchText, selectCategory);
+    public List<Article> getArticles(String name, String category) {
+        return articleRepository.getAllFiltered(name, category);
     }
-
-   /* public List<Article> getArticles(String searchText) {
-        if (searchText != null) {
-            return articleRepository.findByName(searchText);
-        }
-        return articleRepository.findAll();
-    }*/
 
     public Article getArticle(Integer id) {
         return articleRepository.findById(id)
