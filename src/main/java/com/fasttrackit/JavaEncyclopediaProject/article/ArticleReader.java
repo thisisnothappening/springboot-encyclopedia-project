@@ -1,6 +1,7 @@
 package com.fasttrackit.JavaEncyclopediaProject.article;
 
 
+import com.fasttrackit.JavaEncyclopediaProject.category.Category;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -41,7 +42,7 @@ public class ArticleReader {
         String line;
         while ((line = bufferedReader.readLine()) != null) {
             String[] tokens = line.split(" \\| ");
-            articleRepository.save(new Article(tokens[0], tokens[1], tokens[2], tokens[3]));
+            articleRepository.save(new Article(tokens[0], new Category(tokens[1]), tokens[2], tokens[3]));
         }
         bufferedReader.close();
         return articleRepository.findAll();

@@ -1,5 +1,6 @@
 package com.fasttrackit.JavaEncyclopediaProject.article;
 
+import com.fasttrackit.JavaEncyclopediaProject.category.Category;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,18 +13,18 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Article {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column
     private String name;
-    @Column
-    private String category;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Category category;
     @Column(length = 100000)
     private String picture;
     @Column(length = 100000)
     private String text;
 
-    public Article(String name, String category, String picture, String text) {
+    public Article(String name, Category category, String picture, String text) {
         this.name = name;
         this.category = category;
         this.picture = picture;
