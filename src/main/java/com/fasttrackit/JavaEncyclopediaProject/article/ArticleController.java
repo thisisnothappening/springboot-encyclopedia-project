@@ -26,9 +26,9 @@ public class ArticleController {
         return articleService.getArticles(name, category);
     }
 
-    @GetMapping("{id}")
-    Article getArticle(@PathVariable Integer id) {
-        return articleService.getArticle(id);
+    @GetMapping("{id}") // this is just for testing
+    Article getArticleById(@PathVariable Integer id) {
+        return articleService.getArticleById(id);
     }
 
     @PutMapping("{id}")

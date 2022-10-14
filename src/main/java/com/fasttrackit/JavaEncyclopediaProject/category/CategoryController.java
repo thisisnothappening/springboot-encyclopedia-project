@@ -20,8 +20,8 @@ public class CategoryController {
         return categoryService.getCategories();
     }
 
-    @GetMapping("{id}")
-    Category getCategory(@PathVariable Integer id) {
-        return categoryService.getCategory(id);
+    @GetMapping("{id}") // this is just for testing
+    Category getCategoryById(@PathVariable Integer id) {
+        return categoryService.getCategoryById(id);
     }
 }

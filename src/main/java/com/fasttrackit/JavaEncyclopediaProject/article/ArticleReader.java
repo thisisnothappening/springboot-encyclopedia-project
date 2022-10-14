@@ -1,7 +1,7 @@
 package com.fasttrackit.JavaEncyclopediaProject.article;
 
-
 import com.fasttrackit.JavaEncyclopediaProject.category.Category;
+import com.fasttrackit.JavaEncyclopediaProject.category.CategoryRepository;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -36,13 +36,24 @@ public class ArticleReader {
 
     @Bean
     @SneakyThrows
-    List<Article> readFile(ArticleRepository articleRepository) {
+    List<Article> readFile(ArticleRepository articleRepository, CategoryRepository categoryRepository) {
         wikipediaReferenceBracketsRemover();
         BufferedReader bufferedReader = new BufferedReader(new FileReader(fileArticlesPathImproved));
         String line;
         while ((line = bufferedReader.readLine()) != null) {
             String[] tokens = line.split(" \\| ");
-            articleRepository.save(new Article(tokens[0], new Category(tokens[1]), tokens[2], tokens[3]));
+            Article article;
+            Category category;
+            if (categoryRepository.existsByName(tokens[1])) {
+                category = categoryRepository.findByName(tokens[1]);
+                article = new Article(tokens[0], category, tokens[2], tokens[3]);
+            } else {
+                category = new Category(tokens[1]);
+                article = new Article(tokens[0], categoryRepository.save(category), tokens[2], tokens[3]);
+            }
+            articleRepository.save(article);
+        //    category.getArticleList().add(article);
+        //    categoryRepository.save(category);
         }
         bufferedReader.close();
         return articleRepository.findAll();
