@@ -49,11 +49,10 @@ public class ArticleReader {
                 article = new Article(tokens[0], category, tokens[2], tokens[3]);
             } else {
                 category = new Category(tokens[1]);
-                article = new Article(tokens[0], categoryRepository.save(category), tokens[2], tokens[3]);
+                categoryRepository.save(category);
+                article = new Article(tokens[0], category, tokens[2], tokens[3]);
             }
             articleRepository.save(article);
-        //    category.getArticleList().add(article);
-        //    categoryRepository.save(category);
         }
         bufferedReader.close();
         return articleRepository.findAll();

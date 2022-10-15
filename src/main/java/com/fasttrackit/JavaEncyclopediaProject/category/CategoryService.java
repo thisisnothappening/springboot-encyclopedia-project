@@ -15,10 +15,6 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public CategoryRepository getCategoryRepository() { // do I need this?
-        return categoryRepository;
-    }
-
     public Category saveCategory(Category category) {
         return categoryRepository.save(category);
     }
@@ -36,14 +32,7 @@ public class CategoryService {
         return categoryRepository.findByName(name);
     }
 
-    public void deleteCategory(Integer id) {
-        categoryRepository.delete(categoryRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Category not found!")));
-    }
-
     public boolean existsByName(String name) {
         return categoryRepository.existsByName(name);
     }
-
-
 }

@@ -1,8 +1,8 @@
 package com.fasttrackit.JavaEncyclopediaProject.article;
 
-
 import com.fasttrackit.JavaEncyclopediaProject.category.Category;
-import com.fasttrackit.JavaEncyclopediaProject.category.CategoryRepository;
+import com.fasttrackit.JavaEncyclopediaProject.category.CategoryService;
+import com.fasttrackit.JavaEncyclopediaProject.exceptions.NullFieldException;
 import com.fasttrackit.JavaEncyclopediaProject.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,21 +13,30 @@ import java.util.List;
 @Service
 public class ArticleService {
     private final ArticleRepository articleRepository;
-    private final CategoryRepository categoryRepository; // I will remove this later
-
-    // I will add CategoryService here after i fix all the bugs
+    private final CategoryService categoryService;
 
     @Autowired
-    public ArticleService(ArticleRepository articleRepository, CategoryRepository categoryRepository) {
+    public ArticleService(ArticleRepository articleRepository, CategoryService categoryService) {
         this.articleRepository = articleRepository;
-        this.categoryRepository = categoryRepository;
+        this.categoryService = categoryService;
+    }
+
+    private void notNullOrBlank(Article article) {
+        if (article.getName() == null || article.getName().trim().length() == 0 ||
+                article.getCategory() == null ||
+                article.getCategory().getName() == null || article.getCategory().getName().trim().length() == 0 ||
+                article.getPicture() == null || article.getPicture().trim().length() == 0 ||
+                article.getText() == null || article.getText().trim().length() == 0) {
+            throw new NullFieldException("Field cannot be blank or null.");
+        }
     }
 
     public Article postArticle(Article article) {
-        if (categoryRepository.existsByName(article.getCategory().getName())) {
-            article.setCategory(categoryRepository.findByName(article.getCategory().getName()));
+        notNullOrBlank(article);
+        if (categoryService.existsByName(article.getCategory().getName())) {
+            article.setCategory(categoryService.getCategoryByName(article.getCategory().getName()));
         } else {
-            article.setCategory(categoryRepository.save(new Category(article.getCategory().getName())));
+            article.setCategory(categoryService.saveCategory(new Category(article.getCategory().getName())));
         }
         return articleRepository.save(article);
     }
@@ -43,30 +52,22 @@ public class ArticleService {
 
     @Transactional
     public Article editArticle(Integer id, Article article) {
+        notNullOrBlank(article);
         Article existingArticle = articleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Article not found!"));
         existingArticle.setName(article.getName());
         existingArticle.setPicture(article.getPicture());
         existingArticle.setText(article.getText());
-        if (categoryRepository.existsByName(article.getCategory().getName())) {
-            existingArticle.setCategory(categoryRepository.findByName(article.getCategory().getName()));
+        if (categoryService.existsByName(article.getCategory().getName())) {
+            existingArticle.setCategory(categoryService.getCategoryByName(article.getCategory().getName()));
         } else {
-            existingArticle.setCategory(categoryRepository.save(article.getCategory()));
+            existingArticle.setCategory(categoryService.saveCategory(article.getCategory()));
         }
         return articleRepository.save(existingArticle);
     }
 
-    public void deleteArticle(Integer id) { // this slightly works but throws exception
-       // articleRepository.delete(articleRepository.findById(id)
-       //         .orElseThrow(() -> new ResourceNotFoundException("Article not found!")));
-        Article article = articleRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Article not found!"));
-        Category category = categoryRepository.findByName(article.getCategory().getName());
-        articleRepository.delete(article);
-        category.getArticleList().remove(article);
-        categoryRepository.save(category);
-        if (category.getArticleList().isEmpty()) {
-            categoryRepository.delete(category);
-        }
+    public void deleteArticle(Integer id) {
+        articleRepository.delete(articleRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Article not found!")));
     }
 }
