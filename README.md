@@ -1,6 +1,6 @@
 # Java-Encyclopedia-Project-Backend
 
-Nume: Paul Negoiu
+## Nume: Paul Negoiu
 
 Am facut o enciclopedie web care afiseaza diverse articole, folosind Java pentru back-end si Typescript pentru front-end.
 
