@@ -3,6 +3,7 @@
 Nume: Paul Negoiu
 
 Am facut o enciclopedie web care afiseaza diverse articole, folosind Java pentru back-end si Typescript pentru front-end.
+
 In front-end: 
 - se poate da click pe un articol, care va face sa apara sub el article.text (adica informatii despre articol) si 2 butoane, unul 'DELETE' si unul 'EDIT'
 - in header se poate vedea titlul "WelcomePedia", sub care exista 2 filtre. Cel din stanga este pentru Category, si cel din dreapta pentru Article
