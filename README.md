@@ -1,7 +1,6 @@
 # Java-Encyclopedia-Project-Backend
 
 Nume: Paul Negoiu
-Titlu: WelcomePedia / Enciclopedie Web
 
 Am facut o enciclopedie web care afiseaza diverse articole, folosind Java pentru back-end si Typescript pentru front-end.
 In front-end: 
