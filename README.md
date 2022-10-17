@@ -11,3 +11,4 @@ In front-end:
 - cand se da click pe butonul 'DELETE', bineinteles ca articolul se sterge
 - cand se da click pe butonul 'EDIT', el dispare, odata cu filtrele, si apare form-ul de edit la acel articol
 - dupa ce am dat click pe 'ADD' sau 'EDIT', si am scris ceva in fiecare field din form, se poate da click pe 'SAVE', care inchide form-ul, si adauga sau updateaza un articol
+link catre front-end: https://github.com/thisisnothappening/Java-Encyclopedia-Project-Frontend
