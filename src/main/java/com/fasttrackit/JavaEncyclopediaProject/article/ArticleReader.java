@@ -34,7 +34,7 @@ public class ArticleReader {
         bufferedWriter.close();
     }
 
-    @Bean
+   // @Bean
     @SneakyThrows
     List<Article> readFile(ArticleRepository articleRepository, CategoryRepository categoryRepository) {
         wikipediaReferenceBracketsRemover();
