@@ -35,4 +35,8 @@ public class CategoryService {
     public boolean existsByName(String name) {
         return categoryRepository.existsByName(name);
     }
+
+    public void delete(Category category) {
+        categoryRepository.delete(category);
+    }
 }

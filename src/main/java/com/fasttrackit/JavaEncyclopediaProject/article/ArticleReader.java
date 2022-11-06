@@ -34,7 +34,7 @@ public class ArticleReader {
         bufferedWriter.close();
     }
 
-   // @Bean
+    @Bean
     @SneakyThrows
     List<Article> readFile(ArticleRepository articleRepository, CategoryRepository categoryRepository) {
         wikipediaReferenceBracketsRemover();
@@ -53,6 +53,8 @@ public class ArticleReader {
                 article = new Article(tokens[0], category, tokens[2], tokens[3]);
             }
             articleRepository.save(article);
+            category.getArticleList().add(article);
+            categoryRepository.save(category);
         }
         bufferedReader.close();
         return articleRepository.findAll();

@@ -67,7 +67,14 @@ public class ArticleService {
     }
 
     public void deleteArticle(Integer id) {
-        articleRepository.delete(articleRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Article not found!")));
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Article not found!"));
+        Category category = categoryService.getCategoryByName(article.getCategory().getName());
+        articleRepository.delete(article);
+        category.getArticleList().remove(article);
+        categoryService.saveCategory(category);
+        if (category.getArticleList().isEmpty()) {
+            categoryService.delete(category);
+        }
     }
 }
