@@ -58,10 +58,18 @@ public class ArticleService {
         existingArticle.setName(article.getName());
         existingArticle.setPicture(article.getPicture());
         existingArticle.setText(article.getText());
+        Category category = categoryService.getCategoryByName(existingArticle.getCategory().getName());
         if (categoryService.existsByName(article.getCategory().getName())) {
             existingArticle.setCategory(categoryService.getCategoryByName(article.getCategory().getName()));
         } else {
             existingArticle.setCategory(categoryService.saveCategory(article.getCategory()));
+        }
+        if (!existingArticle.getCategory().getName().equals(category.getName())) {
+            category.getArticleList().remove(existingArticle);
+            categoryService.saveCategory(category);
+        }
+        if (category.getArticleList().isEmpty()) {
+            categoryService.delete(category);
         }
         return articleRepository.save(existingArticle);
     }
